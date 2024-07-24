@@ -1,12 +1,9 @@
 import random
 import numpy as np
-import pygad
 import time
 
 import testRun
 
-import opencav_aeb_genetic
-import autodrive
 
 def init_population(popSize, timesteps):
     population = []
