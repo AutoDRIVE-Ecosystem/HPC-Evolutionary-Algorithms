@@ -59,6 +59,6 @@ def runSimforTime(timer, controls):
         simRunner.killOpenCAV()
         simRunner.killSim()
 
-runSimforTime(10, [[1.5, 1, 0], [1.5, 1.5, 0]])
+runSimforTime(10, init_population(1, 10))
 
 
