@@ -1,9 +1,9 @@
 import random
 import numpy as np
 import time
+import matplotlib.pyplot as plt
 
 import testRun
-
 
 def init_population(popSize, timesteps):
     population = []
@@ -18,7 +18,7 @@ def init_population(popSize, timesteps):
     return population
 
 def fitness(individual, timer):
-    runSimforTime(timer, individual)
+    return runSimforTime(timer, individual)
     #Get fitness score from opencav_aeb_genetic.py
 
 def selection(population, fitnesses):
@@ -59,6 +59,32 @@ def runSimforTime(timer, controls):
         simRunner.killOpenCAV()
         simRunner.killSim()
 
-runSimforTime(10, init_population(1, 10))
+def genetic_algorithm():
+    population = init_population(1000, 1000)
+    fitness_history = []
+
+    for generation in range(1000):
+        fitnesses = [fitness(individual, 1000) for individual in population]
+        fitness_history.append(max(fitnesses))  # Track the best fitness in each generation
+
+        new_population = []
+        for _ in range(1000 // 2):
+            parent1 = selection(population, fitnesses)
+            parent2 = selection(population, fitnesses)
+            child1, child2 = crossover(parent1, parent2)
+            new_population.append(mutation(child1, 0.02))
+            new_population.append(mutation(child2, 0.02))
+
+        population = new_population
+
+    return fitness_history
 
 
+if __name__ == "__main__":
+    fitness_history = genetic_algorithm()
+
+    plt.plot(fitness_history)
+    plt.xlabel('Generation')
+    plt.ylabel('Best Fitness')
+    plt.title('Genetic Algorithm Performance')
+    plt.show()
