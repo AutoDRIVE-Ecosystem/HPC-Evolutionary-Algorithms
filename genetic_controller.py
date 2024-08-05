@@ -64,8 +64,9 @@ def runSimforTime(timer, controls):
     return simRunner.fitness
 
 def genetic_algorithm():
+    popSize = 1000
     try:
-        population = init_population(1000, 1000) # Change first for population size and second for number of controls per simulation
+        population = init_population(popSize, 1000) # Change first for population size and second for number of controls per simulation
         fitness_history = []
     
         for generation in range(1000): # Change for number of iterations
@@ -79,7 +80,7 @@ def genetic_algorithm():
             fitness_history.append(max(fitnesses))  # Track the best fitness in each generation
     
             new_population = []
-            for _ in range(1000 // 2):
+            for _ in range(popSize // 2):
                 parent1 = selection(population, fitnesses)
                 parent2 = selection(population, fitnesses)
                 child1, child2 = crossover(parent1, parent2)
