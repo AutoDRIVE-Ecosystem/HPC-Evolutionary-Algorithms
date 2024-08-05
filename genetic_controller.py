@@ -55,6 +55,7 @@ def runSimforTime(timer, controls):
         time.sleep(timer)
     except:
         print("An error occured")
+        return None
     finally:
         simRunner.killOpenCAV()
         simRunner.killSim()
@@ -67,7 +68,13 @@ def genetic_algorithm():
         fitness_history = []
     
         for generation in range(1000):
-            fitnesses = [fitness(individual, 1000) for individual in population]
+            fitnesses = []
+            for individual in population:
+                fit = fitness(individual, 1000)
+                if fit == None:
+                    return None
+            
+                fitnesses += [fit]
             fitness_history.append(max(fitnesses))  # Track the best fitness in each generation
     
             new_population = []
