@@ -4,24 +4,26 @@ import signal
 import time
 
 class testRun:
+    def __init__(self):
+        self.simProcess = None
+        self.opencav_process = None
+        self.fitness = 0
+
     @staticmethod
-    def newSim():
+    def newSim(self):
 
         path = '~/Adi\ Summer\ 2024/AutoDRIVE-Simulator-AEB/AutoDRIVE\ Simulator.x86_64'
         #Local Path update for palmetto
-        process = subprocess.Popen(path, shell=True)
+        self.simProcess = subprocess.Popen(path, shell=True)
 
     @staticmethod
-    def killSim():
-        file = 'AutoDRIVE\ Simulator.x86_64'
-        cmd = f"pgrep -f {file}"
-        pid = os.popen(cmd).read().strip()
-
-        if pid:
-            os.system(f"kill {pid}")
-            print(f"Executable {file} stopped.")
-        else:
-            print(f"No process found for {file}.")
+    def killSim(self):
+        if self.sim_process:
+            try:
+                os.kill(self.simProcess.pid, signal.SIGTERM)
+                self.simProcess = None
+            except OSError:
+                print("Process Not Found")
 
     @staticmethod
     def simIsRunning():
@@ -35,7 +37,7 @@ class testRun:
             return False
         
     @staticmethod
-    def newOpenCAV(controls):
+    def newOpenCAV(self, controls):
         path = 'opencav_aeb_genetic.py'
         
 
@@ -43,19 +45,17 @@ class testRun:
 
         command = ["python3", path] + controls
 
-        process = subprocess.Popen(command, shell=False)
+        self.opencav_process = subprocess.Popen(command, shell=False)
+
+        stdout, stderr = self.opencav_process.communicate()
+        
+        self.fitness = stdout
 
     @staticmethod
-    def killOpenCAV():
-        file = 'opencav_aeb_genetic.py'
-        cmd = f"pgrep -f {file}"
-        pid = os.popen(cmd).read().strip()
-
-        if pid:
-            os.system(f"kill {pid}")
-            print(f"Executable {file} stopped.")
-        else:
-            print(f"No process found for {file}.")
-
-
-        
+    def killOpenCAV(self):
+        if self.sim_process:
+            try:
+                os.kill(self.simProcess.pid, signal.SIGTERM)
+                self.simProcess = None
+            except OSError:
+                print("Process Not Found")
