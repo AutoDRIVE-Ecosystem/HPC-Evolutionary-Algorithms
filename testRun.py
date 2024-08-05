@@ -53,9 +53,9 @@ class testRun:
 
     @staticmethod
     def killOpenCAV(self):
-        if self.sim_process:
+        if self.opencav_process:
             try:
-                os.kill(self.simProcess.pid, signal.SIGTERM)
-                self.simProcess = None
+                os.kill(self.opencav_process.pid, signal.SIGTERM)
+                self.opencav_process = None
             except OSError:
                 print("Process Not Found")
