@@ -27,16 +27,16 @@ opencav_1 = autodrive.OpenCAV()
 opencav_1.id = 'V1'
 
 # Load YOLO Model
-#net = cv2.dnn.readNet("yolov3-tiny.weights", "yolov3-tiny.cfg")
+net = cv2.dnn.readNet("yolov3-tiny.weights", "yolov3-tiny.cfg")
 
 # Load Classes
-#with open("coco.names", 'r') as f:
-#    classes = [line.strip() for line in f.readlines()]
+with open("coco.names", 'r') as f:
+    classes = [line.strip() for line in f.readlines()]
 
 # Configuration
-#layer_name = net.getLayerNames()
-#output_layer = [layer_name[i - 1] for i in net.getUnconnectedOutLayers()]
-#colors = np.random.uniform(0, 255, size=(len(classes), 3))
+layer_name = net.getLayerNames()
+output_layer = [layer_name[i - 1] for i in net.getUnconnectedOutLayers()]
+colors = np.random.uniform(0, 255, size=(len(classes), 3))
 
 # Initialize the server
 sio = socketio.Server()
@@ -158,8 +158,14 @@ def bridge(sid, data):
         commandInfo['timestep'] += 1
 
         commandData[0] = commandInfo
-        
-        
+        brakeZone = 0
+        if opencav_1.position[1] < -110:
+            if opencav_1.brake_command == 1:
+                brakeZone = 1
+            else:
+                brakeZone = -1
+        fitness = (-1 * DTC) + opencav_1.linear_acceleration + opencav_1.angular_velocity - (opencav_1.collision_count * 5) + brakeZone
+        print(fitness)
 
         # Vehicle light commands
         if (0 <= environment.time_of_day <= 420 or 1080 <= environment.time_of_day <= 1440): # Night
@@ -198,7 +204,3 @@ def bridge(sid, data):
 if __name__ == '__main__':
     app = socketio.Middleware(sio, app) # Wrap flask application with socketio's middleware
     eventlet.wsgi.server(eventlet.listen(('', 4567)), app) # Deploy as an eventlet WSGI server
-
-
-
-
