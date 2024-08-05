@@ -2,6 +2,7 @@ import random
 import numpy as np
 import time
 import matplotlib.pyplot as plt
+import pickle
 
 import testRun
 
@@ -86,6 +87,9 @@ def genetic_algorithm():
                 new_population.append(mutation(child2, 0.02))
     
             population = new_population
+
+            with open('controls.pkl', wb) as f:
+                pickle.dump(population, f)
     
         return fitness_history
     except KeyboardInterrupt:
