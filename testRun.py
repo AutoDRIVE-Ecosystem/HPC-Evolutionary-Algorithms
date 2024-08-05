@@ -16,12 +16,15 @@ class testRun:
         self.simProcess = subprocess.Popen(path, shell=True)
 
     def killSim(self):
-        if self.simProcess:
-            try:
-                os.kill(self.simProcess.pid, signal.SIGTERM)
-                self.simProcess = None
-            except OSError:
-                print("Process Not Found")
+        file = 'AutoDRIVE\ Simulator.x86_64'
+        cmd = f"pgrep -f {file}"
+        pid = os.popen(cmd).read().strip()
+
+        if pid:
+            os.system(f"kill {pid}")
+            print(f"Executable {file} stopped.")
+        else:
+            print(f"No process found for {file}.")
 
     def simIsRunning():
         file = 'AutoDRIVE\ Simulator.x86_64'
@@ -48,9 +51,12 @@ class testRun:
         self.fitness = stdout
 
     def killOpenCAV(self):
-        if self.opencav_process:
-            try:
-                os.kill(self.opencav_process.pid, signal.SIGTERM)
-                self.opencav_process = None
-            except OSError:
-                print("Process Not Found")
+        file = 'opencav_aeb_genetic.py'
+        cmd = f"pgrep -f {file}"
+        pid = os.popen(cmd).read().strip()
+
+        if pid:
+            os.system(f"kill {pid}")
+            print(f"Executable {file} stopped.")
+        else:
+            print(f"No process found for {file}.")
