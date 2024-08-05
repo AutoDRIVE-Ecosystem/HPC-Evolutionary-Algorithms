@@ -43,8 +43,8 @@ def mutation(individual, mutation_rate=0.01):
 
 
 def runSimforTime(timer, controls):
+    simRunner = testRun.testRun()
     try:
-        simRunner = testRun.testRun()
 
         simRunner.newSim()
 
@@ -58,6 +58,8 @@ def runSimforTime(timer, controls):
     finally:
         simRunner.killOpenCAV()
         simRunner.killSim()
+
+    return simRunner.fitness
 
 def genetic_algorithm():
     population = init_population(1000, 1000)
