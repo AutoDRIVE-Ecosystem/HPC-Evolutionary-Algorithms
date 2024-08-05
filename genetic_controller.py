@@ -62,24 +62,27 @@ def runSimforTime(timer, controls):
     return simRunner.fitness
 
 def genetic_algorithm():
-    population = init_population(1000, 1000)
-    fitness_history = []
-
-    for generation in range(1000):
-        fitnesses = [fitness(individual, 1000) for individual in population]
-        fitness_history.append(max(fitnesses))  # Track the best fitness in each generation
-
-        new_population = []
-        for _ in range(1000 // 2):
-            parent1 = selection(population, fitnesses)
-            parent2 = selection(population, fitnesses)
-            child1, child2 = crossover(parent1, parent2)
-            new_population.append(mutation(child1, 0.02))
-            new_population.append(mutation(child2, 0.02))
-
-        population = new_population
-
-    return fitness_history
+    try:
+        population = init_population(1000, 1000)
+        fitness_history = []
+    
+        for generation in range(1000):
+            fitnesses = [fitness(individual, 1000) for individual in population]
+            fitness_history.append(max(fitnesses))  # Track the best fitness in each generation
+    
+            new_population = []
+            for _ in range(1000 // 2):
+                parent1 = selection(population, fitnesses)
+                parent2 = selection(population, fitnesses)
+                child1, child2 = crossover(parent1, parent2)
+                new_population.append(mutation(child1, 0.02))
+                new_population.append(mutation(child2, 0.02))
+    
+            population = new_population
+    
+        return fitness_history
+    except KeyboardInterrupt:
+        return None
 
 
 if __name__ == "__main__":
