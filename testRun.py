@@ -36,7 +36,7 @@ class testRun:
         else:
             return False
         
-    def newOpenCAV(self, controls):
+    async def newOpenCAV(self, controls):
         path = 'opencav_aeb_genetic.py'
         
 
