@@ -65,13 +65,13 @@ def runSimforTime(timer, controls):
 
 def genetic_algorithm():
     try:
-        population = init_population(1000, 1000)
+        population = init_population(1000, 1000) # Change first for population size and second for number of controls per simulation
         fitness_history = []
     
-        for generation in range(1000):
+        for generation in range(1000): # Change for number of iterations
             fitnesses = []
             for individual in population:
-                fit = fitness(individual, 1000)
+                fit = fitness(individual, 1000) # Change for time per simulation
                 if fit == None:
                     return None
             
