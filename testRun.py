@@ -9,23 +9,20 @@ class testRun:
         self.opencav_process = None
         self.fitness = 0
 
-    @staticmethod
     def newSim(self):
 
         path = '~/Adi\ Summer\ 2024/AutoDRIVE-Simulator-AEB/AutoDRIVE\ Simulator.x86_64'
         #Local Path update for palmetto
         self.simProcess = subprocess.Popen(path, shell=True)
 
-    @staticmethod
     def killSim(self):
-        if self.sim_process:
+        if self.simProcess:
             try:
                 os.kill(self.simProcess.pid, signal.SIGTERM)
                 self.simProcess = None
             except OSError:
                 print("Process Not Found")
 
-    @staticmethod
     def simIsRunning():
         file = 'AutoDRIVE\ Simulator.x86_64'
         cmd = f"pgrep -f {file}"
@@ -36,7 +33,6 @@ class testRun:
         else:
             return False
         
-    @staticmethod
     def newOpenCAV(self, controls):
         path = 'opencav_aeb_genetic.py'
         
@@ -51,7 +47,6 @@ class testRun:
         
         self.fitness = stdout
 
-    @staticmethod
     def killOpenCAV(self):
         if self.opencav_process:
             try:
