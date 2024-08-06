@@ -3,7 +3,7 @@ import numpy as np
 import time
 import matplotlib.pyplot as plt
 import pickle
-
+from threading import thread
 import testRun
 
 def init_population(popSize, timesteps):
@@ -51,7 +51,8 @@ def runSimforTime(timer, controls):
 
         time.sleep(7)
 
-        simRunner.newOpenCAV(controls)
+        thread = Thread(target=simRunner.newOpenCAV, args = (controls, ))
+        thread.start()
 
         time.sleep(timer)
     except:
@@ -60,6 +61,7 @@ def runSimforTime(timer, controls):
     finally:
         simRunner.killOpenCAV()
         simRunner.killSim()
+        thread.join()
 
     return simRunner.fitness
 
