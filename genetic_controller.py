@@ -91,7 +91,7 @@ def genetic_algorithm():
     
             population = new_population
 
-            with open('controls.pkl', wb) as f:
+            with open('controls.pkl', 'wb') as f:
                 pickle.dump(population, f)
     
         return fitness_history
