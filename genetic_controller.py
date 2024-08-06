@@ -3,7 +3,7 @@ import numpy as np
 import time
 import matplotlib.pyplot as plt
 import pickle
-from threading import thread
+from threading import Thread
 import testRun
 
 def init_population(popSize, timesteps):
