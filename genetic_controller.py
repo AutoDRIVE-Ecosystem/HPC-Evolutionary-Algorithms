@@ -76,7 +76,7 @@ def genetic_algorithm():
         for generation in range(1000): # Change for number of iterations
             fitnesses = []
             for individual in population:
-                fit = fitness(individual, 1000) # Change for time per simulation
+                fit = fitness(individual, 50) # Change for time per simulation
                 fitnesses += [fit]
             fitness_history.append(max(fitnesses))  # Track the best fitness in each generation
     
