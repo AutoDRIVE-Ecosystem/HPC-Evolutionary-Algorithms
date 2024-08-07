@@ -11,7 +11,7 @@ class testRun:
 
     def newSim(self):
 
-        path = '~/Adi\ Summer\ 2024/AutoDRIVE-Simulator-AEB/AutoDRIVE\ Simulator.x86_64'
+        path = '/home/csamak/Downloads/HPC-Evolutionary-Algorithms/Simulator/AutoDRIVE\ Simulator.x86_64'# -batchmode -nographics'
         #Local Path update for palmetto
         self.simProcess = subprocess.Popen(path, shell=True)
 
