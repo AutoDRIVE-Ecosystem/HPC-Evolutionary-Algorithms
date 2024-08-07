@@ -68,15 +68,17 @@ def runSimforTime(timer, controls):
     return simRunner.fitness
 
 def genetic_algorithm():
-    popSize = 1000
+    popSize = 10
     try:
         population = init_population(popSize, 1000) # Change first for population size and second for number of controls per simulation
         fitness_history = []
     
-        for generation in range(1000): # Change for number of iterations
+        for generation in range(10): # Change for number of iterations
             fitnesses = []
             for individual in population:
-                fit = fitness(individual, 50) # Change for time per simulation
+                with open('controls.pkl', 'wb') as f:
+                    pickle.dump(population, f)
+                fit = fitness(individual, 10) # Change for time per simulation
                 fitnesses += [fit]
             fitness_history.append(max(fitnesses))  # Track the best fitness in each generation
     
@@ -89,9 +91,6 @@ def genetic_algorithm():
                 new_population.append(mutation(child2, 0.02))
     
             population = new_population
-
-            with open('controls.pkl', 'wb') as f:
-                pickle.dump(population, f)
     
         return fitness_history
     except KeyboardInterrupt:
