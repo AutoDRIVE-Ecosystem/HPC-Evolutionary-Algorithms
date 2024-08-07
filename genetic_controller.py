@@ -55,9 +55,11 @@ def runSimforTime(timer, controls):
         thread.start()
 
         time.sleep(timer)
-    except:
+    except KeyboardInterrupt:
         print("An error occured")
-        return None
+        raise KeyboardInterrupt
+    except:
+        print("An Error occured")
     finally:
         simRunner.killOpenCAV()
         simRunner.killSim()
